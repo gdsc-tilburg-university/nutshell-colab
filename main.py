@@ -1,6 +1,7 @@
-import sounddevice
 from os import getcwd
+import sounddevice
 from scipy.io.wavfile import write
+import whisper
 
 
 def record_audio(duration=10, sample_rate=44100):
@@ -19,7 +20,9 @@ def record_audio(duration=10, sample_rate=44100):
 
 
 def transcribe_audio(filename: str):
-    return 0
+    model = whisper.load_model("base")
+    result = model.transcribe(filename)
+    return result.get("text")
 
 
 audio_file = record_audio()
